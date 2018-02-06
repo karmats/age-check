@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import * as util from './util'
 
 class App extends Component {
   state = {
     year: '',
     month: '',
-    day: ''
+    day: '',
+    error: {}
   }
 
   yearChanged = (evt) => {
@@ -23,14 +25,42 @@ class App extends Component {
 
   dayChanged = (evt) => {
     this.setState({
-      day: evt.currentTarget.value
+      day: evt.currentTarget.value,
     })
   }
 
   next = () => {
-    // Create UTC date. Month - 1 because javsascript months starts with 0
-    const dob = new Date(Date.UTC(parseInt(this.state.year), parseInt(this.state.month) - 1, parseInt(this.state.day)))
-    alert(dob.toISOString().slice(0, 10))
+    const { values } = this.validateForm();
+    if (values.year && values.month && values.day) {
+      const dob = new Date(Date.UTC(values.year, values.month, values.day))
+      const age = util.age(dob);
+      if (age >= 18) {
+        alert(`Congratulations! You're birthday is ${dob.toISOString().slice(0, 10)} and you are ${age} years old. You can now enter this awesome page!`)
+      } else {
+        alert(`I'm so sorry! You're birthday is ${dob.toISOString().slice(0, 10)} and you are just ${age} years old. You can't enter this awesome page :(`)
+      }
+    }
+  }
+
+  validateForm = () => {
+    const validate = (valFn, ...args) => {
+      try {
+        return { value: valFn.apply(valFn, args) }
+      } catch (error) {
+        return { error: error.message };
+      }
+    }
+    const yearVal = validate(util.validateYear, this.state.year);
+    const monthVal = validate(util.validateMonth, this.state.month);
+    const dayVal = validate(util.validateDay, this.state.day);
+    this.setState({
+      error: {
+        year: yearVal.error,
+        month: monthVal.error,
+        day: dayVal.error
+      }
+    });
+    return { values: { year: yearVal.value, month: monthVal.value, day: dayVal.value } }
   }
 
   render() {

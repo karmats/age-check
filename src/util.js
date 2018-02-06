@@ -47,7 +47,8 @@ function validateMonth(monthString) {
     if (error.length) {
         throw new RangeError(error);
     }
-    return month;
+    // Month - 1 because javsascript months starts with 0
+    return month - 1;
 }
 
 /**
