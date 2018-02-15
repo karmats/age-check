@@ -18,8 +18,28 @@
   font-size: 1.5em;
 }
 
-.App-intro {
-  font-size: large;
+.App-subtitle {
+  font-size: 1em;
+  color: lightgray;
+}
+
+.App-checkage {
+  margin: 20px 0;
+  font-size: 1em;
+}
+
+.App-input {
+  margin: 0 5px;
+  text-align: center;
+  max-width: 50px;
+  min-height: 20px;
+}
+
+.App-input.error {
+  border-color: red;
+}
+.App-input.error:focus {
+  outline-color: red;
 }
 
 @keyframes App-logo-spin {
