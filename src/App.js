@@ -32,11 +32,15 @@ class App extends Component {
   state = {
     year: '',
     month: '',
-    day: '',
-    error: {}
+    day: ''
+  }
+
+  componentDidMount() {
+    this.yearInput.focus();
   }
 
   yearChanged = (evt) => {
+    evt.currentTarget.setCustomValidity('')
     const year = evt.currentTarget.value
     this.setState({
       year: year
@@ -47,6 +51,7 @@ class App extends Component {
   }
 
   monthChanged = (evt) => {
+    evt.currentTarget.setCustomValidity('')
     const month = evt.currentTarget.value
     this.setState({
       month: month
@@ -57,6 +62,7 @@ class App extends Component {
   }
 
   dayChanged = (evt) => {
+    evt.currentTarget.setCustomValidity('')
     const day = evt.currentTarget.value;
     this.setState({
       day: day,
@@ -68,9 +74,6 @@ class App extends Component {
 
   next = () => {
     const { values, error } = validateForm(this.state.year, this.state.month, this.state.day);
-    this.setState({
-      error: error
-    })
     if (values.year && values.month && values.day) {
       const dob = new Date(Date.UTC(values.year, values.month, values.day))
       const age = util.age(dob);
@@ -80,6 +83,10 @@ class App extends Component {
       } else {
         alert(`I'm so sorry! You're birthday is ${dobIso} and you are just ${age} years old. You can't enter this awesome page :(`)
       }
+    } else {
+      error.year && this.yearInput.setCustomValidity(error.year);
+      error.month && this.monthInput.setCustomValidity(error.month);
+      error.day && this.dayInput.setCustomValidity(error.day);
     }
   }
 
@@ -91,37 +98,36 @@ class App extends Component {
           <h1 className="App-title">Welcome!</h1>
           <h3 className="App-subtitle">To continue you need to verify that you are over 18.</h3>
         </header>
-        <div className="App-checkage">
-          <input
-            id="year"
-            ref={(input) => { this.yearInput = input }}
-            maxLength="4"
-            className={`App-input ${this.state.error.year ? 'error' : ''}`}
-            onChange={this.yearChanged}
-            placeholder="YYYY" />
-          <span>{this.state.error ? this.state.error.year : ''}</span>
-          <input
-            id="month"
-            ref={(input) => { this.monthInput = input }}
-            maxLength="2"
-            className={`App-input ${this.state.error.month ? 'error' : ''}`}
-            onChange={this.monthChanged}
-            placeholder="MM" />
-          <span>{this.state.error ? this.state.error.month : ''}</span>
-          <input
-            id="day"
-            ref={(input) => { this.dayInput = input }}
-            maxLength="2"
-            className={`App-input ${this.state.error.day ? 'error' : ''}`}
-            onChange={this.dayChanged}
-            placeholder="DD" />
-          <span>{this.state.error ? this.state.error.day : ''}</span>
-        </div>
-        <p>
-          <button ref={(button) => { this.nextButton = button }} onClick={this.next}>
-            Next
-          </button>
-        </p>
+        <form>
+          <div className="App-checkage">
+            <input
+              id="year"
+              ref={input => this.yearInput = input }
+              maxLength="4"
+              className="App-input"
+              onChange={this.yearChanged}
+              placeholder="YYYY" />
+            <input
+              id="month"
+              ref={input => this.monthInput = input }
+              maxLength="2"
+              className="App-input"
+              onChange={this.monthChanged}
+              placeholder="MM" />
+            <input
+              id="day"
+              ref={input => this.dayInput = input }
+              maxLength="2"
+              className="App-input"
+              onChange={this.dayChanged}
+              placeholder="DD" />
+          </div>
+          <p>
+            <button type="submit" ref={button => this.nextButton = button } onClick={this.next}>
+              Next
+            </button>
+          </p>
+        </form>
       </div>
     );
   }

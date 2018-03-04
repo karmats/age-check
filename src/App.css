@@ -34,15 +34,16 @@
   max-width: 50px;
   min-height: 20px;
 }
-
-.App-input.error {
+.App-input:invalid {
   border-color: red;
-}
-.App-input.error:focus {
   outline-color: red;
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
