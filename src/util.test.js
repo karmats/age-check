@@ -19,7 +19,8 @@ describe('util test', () => {
     })
 
     it('should return month as number', () => {
-        expect(util.validateMonth('01')).toBe(1)
+        // JS month = month - 1
+        expect(util.validateMonth('01')).toBe(0)
     })
 
     it('should throw error when month is invalid', () => {
