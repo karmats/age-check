@@ -21,7 +21,7 @@ function validateYear(yearString) {
     // Pretty unlikely that someone over 120 years wants to enter the site
     if (year < 1900) {
         error = `Are you really ${thisYear - year} years old?`
-    } else if (year >= thisYear) {
+    } else if (year > thisYear) {
         error = 'You are from the future?'
     }
     if (error.length) {

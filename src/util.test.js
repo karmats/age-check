@@ -15,7 +15,7 @@ describe('util test', () => {
     })
 
     it('should throw error when year is after this year', () => {
-        expect(() => util.validateYear(new Date().getFullYear().toString())).toThrow(RangeError)
+        expect(() => util.validateYear((new Date().getFullYear() + 1).toString())).toThrow(RangeError)
     })
 
     it('should return month as number', () => {
