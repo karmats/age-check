@@ -1,6 +1,6 @@
 # Age check
 
-Simple application that takes a birth date and checks that it's more than 18 years old.
+Simple application that takes a birth date and checks that it's more than 18 years old. [Demo](https://karmats.github.io/age-check/).
 
 ## Run and test
 
