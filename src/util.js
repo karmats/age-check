@@ -1,4 +1,7 @@
-function validateNumber(numString) {
+function validateNumber(numString, field) {
+    if (!numString) {
+        throw new ReferenceError(`${field} is required`)
+    }
     const num = parseInt(numString, 10);
     if (isNaN(num)) {
         throw new TypeError(`'${numString}' is not a number`)
@@ -12,10 +15,11 @@ function validateNumber(numString) {
  * @param   {string} yearString Year input as string
  * @returns {number} Year as number
  * @throws  {TypeError} If yearString cannot be cast to number
+ * @throws  {ReferenceError} If yearString is empty
  * @throws  {RangeError} If year is not valid
  */
 function validateYear(yearString) {
-    const year = validateNumber(yearString);
+    const year = validateNumber(yearString, 'Year');
     const thisYear = new Date().getUTCFullYear();
     let error = '';
     // Pretty unlikely that someone over 120 years wants to enter the site
@@ -36,10 +40,11 @@ function validateYear(yearString) {
  * @param   {string} monthString Month input as string
  * @returns {number} Month as number
  * @throws  {TypeError} If monthString cannot be cast to number
+ * @throws  {ReferenceError} If monthString is empty
  * @throws  {RangeError} If month is not valid
  */
 function validateMonth(monthString) {
-    const month = validateNumber(monthString);
+    const month = validateNumber(monthString, 'Month');
     let error = '';
     if (month < 1 || month > 12) {
         error = 'Month must be between 1 - 12';
@@ -57,10 +62,11 @@ function validateMonth(monthString) {
  * @param   {string} dayString Day input as string
  * @returns {number} Day as number
  * @throws  {TypeError} If dayString cannot be cast to number
+ * @throws  {ReferenceError} If dayString is empty
  * @throws  {RangeError} If day is not valid
  */
 function validateDay(dayString) {
-    const day = validateNumber(dayString);
+    const day = validateNumber(dayString, 'Day');
     let error = '';
     if (day < 1 || day > 31) {
         error = 'Day must be between 1 - 31';

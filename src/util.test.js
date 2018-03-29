@@ -2,12 +2,20 @@ import * as util from './util'
 
 describe('util test', () => {
 
-    it('should return year as number', () => {
-        expect(util.validateYear('1981')).toBe(1981)
+    it('should throw error when input is empty', () => {
+        expect(() => util.validateYear('')).toThrow(ReferenceError)
+        expect(() => util.validateMonth('')).toThrow(ReferenceError)
+        expect(() => util.validateDay('')).toThrow(ReferenceError)
     })
 
     it('should throw error when input is not a number', () => {
         expect(() => util.validateYear('hej')).toThrow(TypeError)
+        expect(() => util.validateMonth('du')).toThrow(TypeError)
+        expect(() => util.validateDay('där')).toThrow(TypeError)
+    })
+
+    it('should return year as number', () => {
+        expect(util.validateYear('1981')).toBe(1981)
     })
 
     it('should throw error when year is before 1900', () => {
