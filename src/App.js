@@ -72,7 +72,8 @@ class App extends Component {
     }
   };
 
-  next = () => {
+  submit = e => {
+    e.preventDefault();
     const { values, error } = validateForm(
       this.state.year,
       this.state.month,
@@ -110,7 +111,7 @@ class App extends Component {
             To continue you need to verify that you are over 18.
           </h3>
         </header>
-        <form>
+        <form onSubmit={this.submit}>
           <div className="App-checkage">
             <input
               id="year"
@@ -142,7 +143,6 @@ class App extends Component {
               type="submit"
               className="App-button"
               ref={button => (this.nextButton = button)}
-              onClick={this.next}
             >
               Next
             </button>
